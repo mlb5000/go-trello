@@ -16,16 +16,18 @@ limitations under the License.
 
 package trello
 
+import "time"
+
 type Attachment struct {
 	client    *Client
-	Id        string   `json:"id"`
-	Bytes     int      `json:"bytes"`
-	Date      string   `json:"date"`
-	EdgeColor string   `json:"edgeColor"`
-	IdMember  string   `json:"idMember"`
-	IsUpload  bool     `json:"isUpload"`
-	MimeType  []string `json:"mimeType"`
-	Name      string   `json:"name"`
+	Id        string    `json:"id"`
+	Bytes     int       `json:"bytes"`
+	Date      time.Time `json:"date"`
+	EdgeColor string    `json:"edgeColor"`
+	IdMember  string    `json:"idMember"`
+	IsUpload  bool      `json:"isUpload"`
+	MimeType  []string  `json:"mimeType"`
+	Name      string    `json:"name"`
 	Previews  []struct {
 		Width  int    `json:"width"`
 		Height int    `json:"height"`

@@ -16,12 +16,14 @@ limitations under the License.
 
 package trello
 
+import "time"
+
 type Action struct {
 	client          *Client
 	Id              string `json:"id"`
 	IdMemberCreator string `json:"idMemberCreator"`
 	Data            struct {
-		DateLastEdited string `json:"dateLastEdited"`
+		DateLastEdited time.Time `json:"dateLastEdited"`
 		ListBefore     struct {
 			Id   string `json:"id"`
 			Name string `json:"name"`
@@ -59,8 +61,8 @@ type Action struct {
 		} `json:"card"`
 		Text string `json:"text"`
 	} `json:"data"`
-	Type          string `json:"type"`
-	Date          string `json:"date"`
+	Type          string    `json:"type"`
+	Date          time.Time `json:"date"`
 	MemberCreator struct {
 		Id         string `json:"id"`
 		AvatarHash string `json:"avatarHash"`

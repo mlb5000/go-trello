@@ -20,30 +20,31 @@ import (
 	"encoding/json"
 	"net/url"
 	"strconv"
+	"time"
 )
 
 type Card struct {
 	client                *Client
-	Id                    string   `json:"id"`
-	Name                  string   `json:"name"`
-	Email                 string   `json:"email"`
-	IdShort               int      `json:"idShort"`
-	IdAttachmentCover     string   `json:"idAttachmentCover"`
-	IdCheckLists          []string `json:"idCheckLists"`
-	IdBoard               string   `json:"idBoard"`
-	IdList                string   `json:"idList"`
-	IdMembers             []string `json:"idMembers"`
-	IdMembersVoted        []string `json:"idMembersVoted"`
-	ManualCoverAttachment bool     `json:"manualCoverAttachment"`
-	Closed                bool     `json:"closed"`
-	Pos                   float32  `json:"pos"`
-	ShortLink             string   `json:"shortLink"`
-	DateLastActivity      string   `json:"dateLastActivity"`
-	ShortUrl              string   `json:"shortUrl"`
-	Subscribed            bool     `json:"subscribed"`
-	Url                   string   `json:"url"`
-	Due                   string   `json:"due"`
-	Desc                  string   `json:"desc"`
+	Id                    string    `json:"id"`
+	Name                  string    `json:"name"`
+	Email                 string    `json:"email"`
+	IdShort               int       `json:"idShort"`
+	IdAttachmentCover     string    `json:"idAttachmentCover"`
+	IdCheckLists          []string  `json:"idCheckLists"`
+	IdBoard               string    `json:"idBoard"`
+	IdList                string    `json:"idList"`
+	IdMembers             []string  `json:"idMembers"`
+	IdMembersVoted        []string  `json:"idMembersVoted"`
+	ManualCoverAttachment bool      `json:"manualCoverAttachment"`
+	Closed                bool      `json:"closed"`
+	Pos                   float32   `json:"pos"`
+	ShortLink             string    `json:"shortLink"`
+	DateLastActivity      time.Time `json:"dateLastActivity"`
+	ShortUrl              string    `json:"shortUrl"`
+	Subscribed            bool      `json:"subscribed"`
+	Url                   string    `json:"url"`
+	Due                   string    `json:"due"`
+	Desc                  string    `json:"desc"`
 	DescData              struct {
 		Emoji struct{} `json:"emoji"`
 	} `json:"descData"`
