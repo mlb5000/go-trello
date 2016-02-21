@@ -16,7 +16,13 @@ limitations under the License.
 
 package trello
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"errors"
+	"net/url"
+	"strings"
+	"time"
+)
 
 type Board struct {
 	client   *Client
@@ -178,4 +184,77 @@ func (b *Board) Actions() (actions []Action, err error) {
 		actions[i].client = b.client
 	}
 	return
+}
+
+type AddCardOpts struct {
+	Name        string
+	Description string
+	Position    string
+	Due         *time.Time
+	ListID      string
+	Labels      []string
+	Members     []string
+}
+
+func (a AddCardOpts) validate() (bool, error) {
+	if len(a.Name) < 1 || len(a.Name) > 16384 {
+		return false, errors.New("Name must be a string of length from 1 to 16384")
+	}
+
+	if len(a.Description) > 16384 {
+		return false, errors.New("Description may not be longer than 16384 characters")
+	}
+
+	if a.Position != "" && (a.Position != "bottom" && a.Position != "top") {
+		return false, errors.New("If position is present it has to be 'bottom' or 'top'")
+	}
+
+	//TODO: Maybe it's not a good idea to hardcode the number 24 even if the documentation is explicit about it
+	if len(a.ListID) != 24 {
+		return false, errors.New("ListID is required and must be a valid 24-char hex string")
+	}
+
+	return true, nil
+}
+
+func (b *Board) AddCard(opts AddCardOpts) (*Card, error) {
+	if ok, err := opts.validate(); !ok {
+		return nil, err
+	}
+
+	params := url.Values{
+		"name":      []string{opts.Name},
+		"idList":    []string{opts.ListID},
+		"urlSource": []string{"null"}, // Not yet implemented
+	}
+
+	if len(opts.Description) > 0 {
+		params.Set("desc", opts.Description)
+	}
+
+	if len(opts.Position) > 0 {
+		params.Set("pos", opts.Position)
+	}
+
+	if len(opts.Labels) > 0 {
+		params.Set("idLabels", strings.Join(opts.Labels, ","))
+	}
+
+	if len(opts.Members) > 0 {
+		params.Set("idMembers", strings.Join(opts.Members, ","))
+	}
+
+	if opts.Due == nil {
+		params.Set("due", "null")
+	} else {
+		params.Set("due", opts.Due.Format("2006-01-02T15:04:05-07:00"))
+	}
+
+	resp, err := b.client.Post("/cards", params)
+	if err != nil {
+		return nil, err
+	}
+
+	c := &Card{client: b.client}
+	return c, json.Unmarshal(resp, c)
 }
