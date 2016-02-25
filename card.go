@@ -230,9 +230,9 @@ func (c *Card) SendToBoard() (*Card, error) {
 
 // MoveToList will move the card to another list
 // https://developers.trello.com/advanced-reference/card#put-1-cards-card-id-or-shortlink-idlist
-func (c *Card) MoveToList(listId string) (*Card, error) {
+func (c *Card) MoveToList(list *List) (*Card, error) {
 	payload := url.Values{}
-	payload.Set("value", listId)
+	payload.Set("value", list.Id)
 
 	body, err := c.client.Put("/cards/"+c.Id+"/idList", payload)
 	if err != nil {
