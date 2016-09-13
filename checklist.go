@@ -32,7 +32,7 @@ type ChecklistItem struct {
 	NameData struct {
 		Emoji struct{} `json:"emoji"`
 	} `json:"nameData"`
-	Pos int `json:"pos"`
+	Pos float32 `json:"pos"`
 }
 
 func (i *ChecklistItem) Delete() error {
