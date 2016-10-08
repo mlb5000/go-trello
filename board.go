@@ -105,7 +105,7 @@ func (b *Board) Lists() (lists []List, err error) {
 }
 
 func (b *Board) Members() (members []Member, err error) {
-	body, err := b.client.Get("/boards/" + b.Id + "/members")
+	body, err := b.client.Get("/boards/" + b.Id + "/members?fields=all")
 	if err != nil {
 		return
 	}
