@@ -46,7 +46,7 @@ func (c *Client) Organization(orgId string) (organization *Organization, err err
 }
 
 func (o *Organization) Members() (members []Member, err error) {
-	body, err := o.client.Get("/organization/" + o.Id + "/members")
+	body, err := o.client.Get("/organization/" + o.Id + "/members?fields=all")
 	if err != nil {
 		return
 	}

@@ -179,3 +179,14 @@ func (b *Board) Actions() (actions []Action, err error) {
 	}
 	return
 }
+
+func (b *Board) Organization() (organization Organization, err error) {
+	body, err := b.client.Get("/boards/" + b.Id + "/organization?fields=all")
+	if err != nil {
+		return
+	}
+
+	err = json.Unmarshal(body, &organization)
+	organization.client = b.client
+	return
+}
