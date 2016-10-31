@@ -167,8 +167,13 @@ func (b *Board) MemberCards(IdMember string) (cards []Card, err error) {
 	return
 }
 
-func (b *Board) Actions() (actions []Action, err error) {
-	body, err := b.client.Get("/boards/" + b.Id + "/actions")
+func (b *Board) Actions(beforeId string) (actions []Action, err error) {
+	suffix := ""
+	if beforeId != "" {
+		suffix = "?before=" + beforeId
+	}
+
+	body, err := b.client.Get("/boards/" + b.Id + "/actions" + suffix)
 	if err != nil {
 		return
 	}

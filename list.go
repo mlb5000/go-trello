@@ -53,8 +53,13 @@ func (l *List) Cards() (cards []Card, err error) {
 	return
 }
 
-func (l *List) Actions() (actions []Action, err error) {
-	body, err := l.client.Get("/lists/" + l.Id + "/actions")
+func (l *List) Actions(beforeId string) (actions []Action, err error) {
+	suffix := ""
+	if beforeId != "" {
+		suffix = "?before=" + beforeId
+	}
+
+	body, err := l.client.Get("/lists/" + l.Id + "/actions" + suffix)
 	if err != nil {
 		return
 	}

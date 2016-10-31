@@ -139,8 +139,13 @@ func (c *Card) Attachment(attachmentId string) (*Attachment, error) {
 	return attachment, err
 }
 
-func (c *Card) Actions() (actions []Action, err error) {
-	body, err := c.client.Get("/cards/" + c.Id + "/actions?filter=commentCard%2CcreateCard")
+func (c *Card) Actions(beforeId string) (actions []Action, err error) {
+	suffix := ""
+	if beforeId != "" {
+		suffix = "?before=" + beforeId
+	}
+
+	body, err := c.client.Get("/cards/" + c.Id + "/actions" + suffix)
 	if err != nil {
 		return
 	}
