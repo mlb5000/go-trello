@@ -66,6 +66,7 @@ type Card struct {
 	Labels []struct {
 		Color string `json:"color"`
 		Name  string `json:"name"`
+		Id    string `json:"id"`
 	} `json:"labels"`
 }
 
