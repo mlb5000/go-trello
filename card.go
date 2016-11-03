@@ -143,7 +143,7 @@ func (c *Card) Attachment(attachmentId string) (*Attachment, error) {
 func (c *Card) Actions(beforeId string) (actions []Action, err error) {
 	suffix := ""
 	if beforeId != "" {
-		suffix = "?before=" + beforeId
+		suffix = "?filter=all&before=" + beforeId
 	}
 
 	body, err := c.client.Get("/cards/" + c.Id + "/actions" + suffix)
